@@ -4,15 +4,18 @@ import numpy as np
 import joblib
 import os
 
+# Check if models exist; if not, automatically run the training script
+if not os.path.exists('placement_classifier.pkl'):
+    with st.spinner("Initializing AI Models for the first time... please wait."):
+        import train_model
+        st.success("AI Models generated successfully!")
+
 # Load the saved AI files safely
-try:
-    clf_model = joblib.load('placement_classifier.pkl')
-    reg_model = joblib.load('salary_regressor.pkl')
-    scaler = joblib.load('feature_scaler.pkl')
-    le_stream = joblib.load('stream_encoder.pkl')
-    le_work_exp = joblib.load('work_exp_encoder.pkl')
-except:
-    st.error("Please run your training script first to generate the basic AI models!")
+clf_model = joblib.load('placement_classifier.pkl')
+reg_model = joblib.load('salary_regressor.pkl')
+scaler = joblib.load('feature_scaler.pkl')
+le_stream = joblib.load('stream_encoder.pkl')
+le_work_exp = joblib.load('work_exp_encoder.pkl')
 
 st.set_page_config(page_title="Placement Hub", layout="centered")
 st.title("🎓 Smart Campus Placement Hub")
